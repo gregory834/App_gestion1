@@ -30,7 +30,7 @@ include("./function/reservation.php");
 <body>
     <!-- Menu principal  -->
 
-    <a class="menu-toggle rounded" href="#">
+    <!-- <a class="menu-toggle rounded" href="#">
         <i class="fas fa-bars"></i>
     </a>
 
@@ -49,7 +49,7 @@ include("./function/reservation.php");
                 <a class="js-scroll-trigger text-dark" href="#attributiondeposte">Attribuer un ordinateur</a>
             </li>
         </ul>
-    </nav>
+    </nav> -->
 
     <!-- Header -->
     <header class="masthead d-flex">
@@ -108,9 +108,9 @@ include("./function/reservation.php");
                                         <td><?php echo $select_reservation_f['Reservation_horaire']; ?></td>
 
                                         <td>
-                                        <!-- Bouton de suppression de reservation  -->
+                                            <!-- Bouton de suppression de reservation  -->
                                             <form action="./function/reservation.php" method="POST">
-                                                <input type="hidden" name="reservID" value="<?php echo $select_reservation_f['idReservation'];?>">
+                                                <input type="hidden" name="reservID" value="<?php echo $select_reservation_f['idReservation']; ?>">
                                                 <button style="cursor: pointer;" name="delete" type="submit" class="btn-sm btn-danger">Retirer l'assignation</button>
                                             </form>
                                         </td>
@@ -144,8 +144,7 @@ include("./function/reservation.php");
 
                 <!-- Creation d'un utilisateur -->
 
-                <!-- <form class="container text-center" action="index.php?create=user" method="post"> -->
-                <form class="container text-center" action="./function/create_user.php" method="post">
+                <form class="container text-center pb-5" action="./function/create_user.php" method="post">
                     <div class="form-row align-items-center content-section-heading">
                         <input type="text" class="form-control" id="inlineFormInputName" name="etudiantnom" placeholder="Nom"></br>
                         <input type="text" class="form-control" id="inlineFormInputName" name="etudiantprenom" placeholder="Prénom"><br></br><br></br>
@@ -153,8 +152,41 @@ include("./function/reservation.php");
                     </div>
                 </form>
             </div>
+
+
+            <!-- Supprimer ou modifier un utilisateur  -->
+            <div class="content-section-heading bg-secondary mt-5">
+                <h3 class="text-secondary mt-5 pt-3 ">Supprimer ou modifer</h3>
+                <h2 class="mb-2 mt-2">Modifier ou supprimer un utilisateur</h2>
+
+                <form class="container text-center mt-5" action="./function/delete_modif_users.php" method="POST">
+                    <select class="form-control" id="modif_utilisateur" name="modif_utilisateur">
+
+                        <option data-tokens="student_1">étudiant</option>
+
+                        <?php $select_etudiant = mysqli_query($db, "select * from etudiant "); //Requête qui permet de sélect tout les étudiants
+
+                        for ($i = 1; $i <= mysqli_num_rows($select_etudiant); $i++) { //Boucle qui parcours tout les étudiants
+                            $ii = $i + 1;
+                            $select_etudiant_fetch = mysqli_fetch_array($select_etudiant); // Affiche les résultats sous forme de tableau.
+
+                            echo '<option data-tokens="student_' . $ii . '" value="' . $select_etudiant_fetch['idetudiant'] . '">' . htmlspecialchars_decode($select_etudiant_fetch['etudiantnom'], ENT_QUOTES) . ', ' . htmlspecialchars_decode($select_etudiant_fetch['etudiantprenom'], ENT_QUOTES) . '</option>';
+                        }
+                        ?>
+                    </select>
+                    <span class="d-flex justify-content-end pt-3 pb-3 ">
+                        <button class="btn btn-danger " type="submit" name="supprimer_utilisateur">Supprimer</button>
+
+                        <button class="btn btn-warning ml-5" type="submit" name="redirection_modifier_utilisateur">Modifier</button>
+
+                    </span>
+                </form>
+            </div>
         </div>
     </section>
+
+    <!------------------------------------------------------------------------>
+
 
 
 

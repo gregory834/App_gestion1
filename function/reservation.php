@@ -16,12 +16,10 @@ function reserve()
     //Connexion à la base de donnée
     $db = mysqli_connect('localhost', "root", "", 'gestionnaire') or die("La base de donnée n'est pas connecté");
 
-
     $etudiant_nom = $_POST['idetudiant']; //Je récupère l'id de l'étudiant quand je choisi dans le select.
 
     //Je sélectionne toute les informations de l'étudiant que j'ai choisi.
     $select_etudiant_nom = mysqli_query($db, "select * from etudiant where idetudiant = '" . $etudiant_nom . "'");
-
 
     //On les récupères sous forme de listes
     $select_etudiant_nom_fetch = mysqli_fetch_array($select_etudiant_nom);
